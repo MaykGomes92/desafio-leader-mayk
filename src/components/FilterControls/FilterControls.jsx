@@ -3,11 +3,11 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
 import { GlobalStorage } from '../../Hook/GlobalContext'
+import Theme from '../../Hook/Theme'
 
 export default function FilterControls() {
-
   const { handleAllData } = React.useContext(GlobalStorage)
-
+  
   const [filters, setFilters] = React.useState({
     storeID: "",
     title: "",
@@ -53,8 +53,8 @@ export default function FilterControls() {
   }
 
   return (
-    <div className='shadow-2xs shadow-[#c9c9c9] rounded-b-2xl p-1 bg-white'>
-      <div className='flex w-full mt-5 flex-col md:justify-around md:flex-row md:items-center'>
+    <div className='shadow-2xs shadow-[#c9c9c9] rounded-b-2xl p-1 font-semibold'>
+      <div className='flex w-full mt-10 flex-col md:justify-around md:flex-row md:items-center'>
         <div>
           <Label htmlFor="title" className="mb-2">Title</Label>
           <Input
@@ -66,7 +66,7 @@ export default function FilterControls() {
           />
         </div>
         <div>
-          <Label htmlFor="storeID" className="mb-2 text-black">Store ID</Label>
+          <Label htmlFor="storeID" className="mb-2 dark:text-white">Store ID</Label>
           <Input
             type="number"
             id="storeID"
@@ -109,7 +109,7 @@ export default function FilterControls() {
         </div>
         <div>
 
-          <Label htmlFor="minDiscount" className="mb-2 text-black">Min Descount</Label>
+          <Label htmlFor="minDiscount" className="mb-2 dark:text-white">Min Descount</Label>
           <Input
             type="number"
             id="minDiscount"
@@ -120,21 +120,22 @@ export default function FilterControls() {
           />
         </div>
         <div>
-          <Label htmlFor="sortBy" className="mb-2 text-black">Ordenar por:</Label>
+          <Label htmlFor="sortBy" className="mb-2 dark:text-white">Ordenar por:</Label>
           <select
             id="sortBy"
             value={filters.sortBy}
             onChange={(e) => setFilters({ ...filters, sortBy: e.target.value })}
-            className="border rounded px-2 py-1"
+            className="border rounded px-2 py-1 dark:text-white"
           >
-            <option value="Price">Preço</option>
-            <option value="Savings">Desconto</option>
-            <option value="DealRating">Nota do negócio</option>
+            <option value="Price" className='dark:text-black'>Preço</option>
+            <option value="Savings" className='dark:text-black'>Desconto</option>
+            <option value="DealRating" className='dark:text-black'>Nota do negócio</option>
           </select>
         </div>
 
-        <div className='mt-4'>
-          <Button onClick={handleSubmit} className="cursor-pointer w-[120px] bg-blue-600 text-white hover:text-white">Submit</Button>
+        <div className='mt-4 flex items-center'>
+          <Button onClick={handleSubmit} className=" mr-5 cursor-pointer w-[120px] bg-blue-600 text-white hover:text-white">Submit</Button>
+          <Theme/>
         </div>
       </div>
     </div>

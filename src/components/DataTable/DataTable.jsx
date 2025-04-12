@@ -41,23 +41,24 @@ export default function GameTable({ games = [], stores = [] }) {
   }
   return (
     <div>
-      <Table className="text-sm text-gray-400 bg-gray-900 rounded-xl overflow-hidden">
-        <TableHeader className="bg-gray-800 text-gray-300">
+      <Table className="rounded-xl overflow-hidden text-sm">
+        <TableHeader className="bg-gray-300 dark:bg-gray-800 ">
           <TableRow>
-            <TableHead className=" text-gray-300">Título</TableHead>
-            <TableHead className=" text-gray-300 flex items-center">Preço Atual $</TableHead>
-            <TableHead className=" text-gray-300">Preço Original $</TableHead>
-            <TableHead className=" text-gray-300 flex items-center gap-2">Loja <IoStorefrontOutline/></TableHead>
-            <TableHead className=" text-gray-300">Desconto %</TableHead>
-            <TableHead className=" text-gray-300 flex items-center gap-2">Nota <RiNumbersLine /></TableHead>
+            <TableHead className="">Título</TableHead>
+            <TableHead className="flex items-center">Preço Atual $</TableHead>
+            <TableHead className="">Preço Original $</TableHead>
+            <TableHead className=" flex items-center gap-2">Loja <IoStorefrontOutline /></TableHead>
+            <TableHead className="">Desconto %</TableHead>
+            <TableHead className="flex items-center gap-2">Nota <RiNumbersLine /></TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {currentGames.map((item, index) => (
-            <TableRow key={index} onClick={() => handleRowClick(item)} className="cursor-pointer hover:bg-gray-700 hover:shadow-md transition-all duration-200 hover:scale-[1.01] text-white">
+            <TableRow key={index} onClick={() => handleRowClick(item)} 
+            className="cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 hover:shadow-md transition-all duration-200 hover:scale-[1.01] font-semibold">
               <TableCell className="p-4">{item.title}</TableCell>
-              <TableCell className="text-green-400">${item.salePrice}</TableCell>
-              <TableCell className="text-green-400">${item.normalPrice}</TableCell>
+              <TableCell className="text-green-600">${item.salePrice}</TableCell>
+              <TableCell className="text-green-600">${item.normalPrice}</TableCell>
               <TableCell>{getStoreName(item.storeID)}</TableCell>
               <TableCell>{parseFloat(item.savings).toFixed(2)}%</TableCell>
               <TableCell>{item.dealRating}</TableCell>
@@ -74,17 +75,17 @@ export default function GameTable({ games = [], stores = [] }) {
               <button
                 disabled={currentPage === 1}
                 onClick={() => setCurrentPage((prev) => prev - 1)}
-                className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300 disabled:opacity-50 cursor-pointer"
+                className="px-3 py-1 bg-gray-200 text-black rounded hover:bg-gray-300 disabled:opacity-50 cursor-pointer"
               >
                 Prev
               </button>
-              <span className="font-medium text-white">
+              <span className="font-medium text-black dark:text-white">
                 Página {currentPage} de {totalPages}
               </span>
               <button
                 disabled={currentPage === totalPages}
                 onClick={() => setCurrentPage((prev) => prev + 1)}
-                className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300 disabled:opacity-50 cursor-pointer"
+                className="px-3 py-1 bg-gray-200 text-black rounded hover:bg-gray-300 disabled:opacity-50 cursor-pointer"
               >
                 Next
               </button>
