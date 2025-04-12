@@ -16,13 +16,13 @@ export default function GameTable({ games = [], stores = [] }) {
   const [selectedGame, setSelectedGame] = React.useState(null)
   const [open, setOpen] = React.useState(false)
 
+  
   const totalPages = Math.ceil(games.length / itemsPerPage)
-
+  
   const currentGames = games.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   )
-
   const handleRowClick = (game) => {
     setSelectedGame(game)
     setOpen(true)
@@ -32,6 +32,11 @@ export default function GameTable({ games = [], stores = [] }) {
     return stores.find((store) => store.storeID === storeID)?.storeName || "Desconhecida"
   }
 
+  if(games.length == 0){
+    return (
+      <h1 className="text-white">Nada Encontrado!</h1>
+    )
+  }
   return (
     <div>
       <Table className="text-sm text-gray-400 bg-gray-900 rounded-xl overflow-hidden">

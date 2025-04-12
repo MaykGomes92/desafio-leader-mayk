@@ -6,6 +6,7 @@ import {
 } from "@/components/ui/dialog"
 import React from 'react'
 import { motion } from "motion/react";
+
 export default function GameModal({ selectedGame, open, onClose }) {
   if (!selectedGame) return null;
 
