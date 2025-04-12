@@ -7,6 +7,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { IoStorefrontOutline } from "react-icons/io5";
+import { RiNumbersLine } from "react-icons/ri";
 import { Pagination } from "@/components/ui/pagination"
 import GameModal from "../GameModal/GameModal"
 
@@ -16,9 +18,9 @@ export default function GameTable({ games = [], stores = [] }) {
   const [selectedGame, setSelectedGame] = React.useState(null)
   const [open, setOpen] = React.useState(false)
 
-  
+
   const totalPages = Math.ceil(games.length / itemsPerPage)
-  
+
   const currentGames = games.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
@@ -32,7 +34,7 @@ export default function GameTable({ games = [], stores = [] }) {
     return stores.find((store) => store.storeID === storeID)?.storeName || "Desconhecida"
   }
 
-  if(games.length == 0){
+  if (games.length == 0) {
     return (
       <h1 className="text-white">Nada Encontrado!</h1>
     )
@@ -43,11 +45,11 @@ export default function GameTable({ games = [], stores = [] }) {
         <TableHeader className="bg-gray-800 text-gray-300">
           <TableRow>
             <TableHead className=" text-gray-300">Título</TableHead>
-            <TableHead className=" text-gray-300">Preço Atual</TableHead>
-            <TableHead className=" text-gray-300">Preço Original</TableHead>
-            <TableHead className=" text-gray-300">% Desconto</TableHead>
-            <TableHead className=" text-gray-300">Loja</TableHead>
-            <TableHead className=" text-gray-300">Nota</TableHead>
+            <TableHead className=" text-gray-300 flex items-center">Preço Atual $</TableHead>
+            <TableHead className=" text-gray-300">Preço Original $</TableHead>
+            <TableHead className=" text-gray-300 flex items-center gap-2">Loja <IoStorefrontOutline/></TableHead>
+            <TableHead className=" text-gray-300">Desconto %</TableHead>
+            <TableHead className=" text-gray-300 flex items-center gap-2">Nota <RiNumbersLine /></TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -56,8 +58,8 @@ export default function GameTable({ games = [], stores = [] }) {
               <TableCell className="p-4">{item.title}</TableCell>
               <TableCell className="text-green-400">${item.salePrice}</TableCell>
               <TableCell className="text-green-400">${item.normalPrice}</TableCell>
-              <TableCell>{parseFloat(item.savings).toFixed(2)}%</TableCell>
               <TableCell>{getStoreName(item.storeID)}</TableCell>
+              <TableCell>{parseFloat(item.savings).toFixed(2)}%</TableCell>
               <TableCell>{item.dealRating}</TableCell>
             </TableRow>
           ))
