@@ -11,15 +11,18 @@ import { api } from "../../urlApi";
 
 export default function GameModal({ selectedGame, open, onClose }) {
 
-  const [historical, setHistorical] = React.useState()
+  const [historical, setHistorical] = React.useState(null)
   React.useEffect(() => {
     async function handleHistoricalPrice() {
-      let response = await api.get(`/games?id=${selectedGame.gameID}`)
-      setHistorical(response.data)
+      try {
+        let response = await api.get(`/games?id=${selectedGame.gameID}`)
+        setHistorical(response.data)
+      } catch (error) {
+        console.log(error)
+      }
     }
     handleHistoricalPrice()
   }, [selectedGame])
-
 
   if (!selectedGame) return null;
   return (
@@ -48,7 +51,9 @@ export default function GameModal({ selectedGame, open, onClose }) {
             <p><strong>Preço Atual:</strong> ${selectedGame.salePrice}</p>
             <p><strong>Preço Original:</strong> ${selectedGame.normalPrice}</p>
             <p><strong>Desconto:</strong> {parseFloat(selectedGame.savings).toFixed(2)}%</p>
-            <p><strong>Histórico de menor preço:</strong> ${historical.cheapestPriceEver.price}</p>
+            {historical?.cheapestPriceEver.price && (
+              <p><strong>Histórico de menor preço:</strong> ${historical.cheapestPriceEver.price}</p>
+            )}
 
             <a
               href={`https://www.cheapshark.com/redirect?dealID=${selectedGame.dealID}`}
