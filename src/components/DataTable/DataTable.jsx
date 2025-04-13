@@ -13,6 +13,7 @@ import { Pagination } from "@/components/ui/pagination"
 import { Button } from "@/components/ui/button"
 import GameModal from "../GameModal/GameModal"
 import GameCard from "../GameCard/GameCard";
+import { motion } from "motion/react";
 
 export default function GameTable({ games = [], stores = [] }) {
   const itemsPerPage = 10
@@ -48,14 +49,18 @@ export default function GameTable({ games = [], stores = [] }) {
     )
   }
   return (
-    <div>
+    <motion.div
+      initial={{ opacity: 0, scale: .5 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ delay: 0.2 }}
+    >
       <Button onClick={handleMode} className="my-2 ml-2 cursor-pointer">{modeGames ? 'Mode Table' : 'Mode Card'}</Button>
       {modeGames == true ? (
-          <GameCard 
+        <GameCard
           currentGames={currentGames}
           getStoreName={getStoreName}
           handleRowClick={handleRowClick}
-          />
+        />
       ) : (
         <Table className="rounded-xl overflow-hidden text-sm">
           <TableHeader className="bg-gray-300 dark:bg-gray-800 ">
@@ -118,6 +123,6 @@ export default function GameTable({ games = [], stores = [] }) {
           onClose={() => setOpen(false)}
         />
       )}
-    </div>
+    </motion.div>
   )
 }
