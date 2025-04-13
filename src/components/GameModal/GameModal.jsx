@@ -9,7 +9,7 @@ import { motion } from "motion/react";
 import { api } from "../../urlApi";
 
 
-export default function GameModal({ selectedGame, open, onClose }) {
+export default function GameModal({ selectedGame, open, onClose, getStoreName }) {
 
   const [historical, setHistorical] = React.useState(null)
   React.useEffect(() => {
@@ -22,6 +22,8 @@ export default function GameModal({ selectedGame, open, onClose }) {
       }
     }
     handleHistoricalPrice()
+
+    
   }, [selectedGame])
 
   if (!selectedGame) return null;
@@ -50,7 +52,7 @@ export default function GameModal({ selectedGame, open, onClose }) {
           <div className="w-full space-y-2 text-sm">
             <p><strong>Preço Atual:</strong> ${selectedGame.salePrice}</p>
             <p><strong>Preço Original:</strong> ${selectedGame.normalPrice}</p>
-            <p><strong>Desconto:</strong> {parseFloat(selectedGame.savings).toFixed(2)}%</p>
+            <p><strong>Loja:</strong> {getStoreName(selectedGame.storeID)}</p>
             {historical?.cheapestPriceEver.price && (
               <p><strong>Histórico de menor preço:</strong> ${historical.cheapestPriceEver.price}</p>
             )}

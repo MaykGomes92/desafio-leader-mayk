@@ -121,6 +121,7 @@ export default function GameTable({ games = [], stores = [] }) {
           selectedGame={selectedGame}
           open={open}
           onClose={() => setOpen(false)}
+          getStoreName={getStoreName}
         />
       )}
     </motion.div>
