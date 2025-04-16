@@ -13,6 +13,7 @@ import { Pagination } from "@/components/ui/pagination"
 import { Button } from "@/components/ui/button"
 import GameModal from "../GameModal/GameModal"
 import GameCard from "../GameCard/GameCard";
+import ToggleFavorites from "../../Hook/ToggleFavorites";
 import { motion } from "motion/react";
 
 export default function GameTable({ games = [], stores = [] }) {
@@ -20,8 +21,23 @@ export default function GameTable({ games = [], stores = [] }) {
   const [currentPage, setCurrentPage] = React.useState(1)
   const [selectedGame, setSelectedGame] = React.useState(null)
   const [open, setOpen] = React.useState(false)
-
   const [modeGames, setModeGames] = React.useState(false)
+
+  const [favorites, setFavorites] = React.useState(() => {
+    const stored = localStorage.getItem("favorites");
+    return stored ? JSON.parse(stored) : [];
+  });
+
+  const toggleFavorite = (gameID) => {
+    setFavorites((prev) => {
+      const updated = prev.includes(gameID)
+        ? prev.filter((id) => id !== gameID)
+        : [...prev, gameID];
+
+      localStorage.setItem("favorites", JSON.stringify(updated));
+      return updated;
+    });
+  };
 
   function handleMode() {
     setModeGames(!modeGames)
@@ -71,6 +87,7 @@ export default function GameTable({ games = [], stores = [] }) {
               <TableHead className=" flex items-center gap-2">Loja <IoStorefrontOutline /></TableHead>
               <TableHead className="">Desconto %</TableHead>
               <TableHead className="flex items-center gap-2">Nota <RiNumbersLine /></TableHead>
+              <TableHead className="text-center">❤</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -83,6 +100,11 @@ export default function GameTable({ games = [], stores = [] }) {
                 <TableCell>{getStoreName(item.storeID)}</TableCell>
                 <TableCell>{parseFloat(item.savings).toFixed(2)}%</TableCell>
                 <TableCell>{item.dealRating}</TableCell>
+                <ToggleFavorites
+                  gameID={item.dealID}
+                  favorites={favorites}
+                  toggleFavorite={toggleFavorite}
+                />
               </TableRow>
             ))
             }
